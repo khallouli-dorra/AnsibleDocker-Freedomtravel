@@ -1,0 +1,28 @@
+- name: Uninstall old versions
+  yum:
+    name: "{{item}}"
+    state: absent
+  with_items:
+    - docker
+    - docker-common
+    - docker-selinux
+    - docker-engine
+
+- name: Create install directory
+  file:
+    path: "{{ docker_install_dir }}" 
+    state: directory
+    mode: 755
+    owner: root
+    group: root
+
+- name: Download script from official Docker
+  get_url:
+    url: https://get.docker.com/
+    dest: "{{ docker_install_dir }}/docker_install.sh"
+    owner: "root"
+    group: "root"
+    mode: 0500
+
+- name: Run the install Docker script.
+  shell: "{{ docker_install_dir }}/docker_install.sh"

@@ -1,0 +1,9 @@
+---
+# Add your user which need to run container
+docker_centos_users: []
+
+# Version pinning. May not work with deprecated docker version.
+docker_version: "" 
+
+# Install directory for docker. Install file will be kept for ansible indepotence.
+docker_install_dir: "/var/docker/install"

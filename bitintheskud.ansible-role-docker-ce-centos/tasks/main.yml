@@ -1,0 +1,37 @@
+---
+# Inspire by digitalocean
+# see: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-centos-7
+
+- name: Check whether docker-ce is already installed
+  shell: rpm -q --queryformat '%{VERSION}' docker-ce warn=False
+  changed_when: False
+  failed_when: False
+  register: result_yum
+
+- name: Print output of result_yum for debug
+  debug:
+    var: result_yum
+
+- name: Print major version for future use
+  debug:
+    var: result_yum.stdout.split('.')[0]
+
+- name: Include installation if docker-ce not installed
+  import_tasks: install_docker.yml
+  when: result_yum.rc
+
+- name: Enable and start docker service
+  service:
+    name: docker
+    enabled: yes
+    state: started
+
+# You need to be root to run docker container.
+# Or you can add the user to docker group which need to run container.
+
+- name: Add users to the docker group
+  user:
+    name: "{{item}}"
+    groups: docker
+    append: yes
+  with_items: "{{docker_centos_users}}"

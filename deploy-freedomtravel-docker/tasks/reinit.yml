@@ -1,0 +1,6 @@
+---
+- name: Delete freedomtravel container
+  docker_container:
+    name: freedomtravel
+    state: absent
+  ignore_errors: yes

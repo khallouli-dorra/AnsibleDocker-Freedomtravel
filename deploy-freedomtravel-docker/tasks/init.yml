@@ -1,0 +1,13 @@
+
+- name: Start Freedomtravel container
+  docker_container:
+    name: "Freedomtravel"
+    recreate: yes
+    #image: "nginx:latest"
+    image: "registry.gitlab.com/dora-doudou/freedomtravel/freedomtravel:latest"
+
+    #ports:
+    #  - "80:80"
+    ports:
+      - "80:4200"
+

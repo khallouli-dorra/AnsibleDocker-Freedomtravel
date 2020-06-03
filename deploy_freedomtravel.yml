@@ -1,0 +1,8 @@
+---
+- hosts: web
+  become: yes
+  roles:
+    # Install docker sur la machine cible ( open source )
+    - bitintheskud.ansible-role-docker-ce-centos/
+    # Role crée par Dorra, deploy l'image Freedomtravel à partir de gitlab 
+    - deploy-freedomtravel-docker
